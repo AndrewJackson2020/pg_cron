@@ -403,6 +403,7 @@ The pg_cron extension supports the following configuration parameters:
 | `cron.max_running_jobs`          | `32`        | Maximum number of jobs that can be running at the same time.                             |
 | `cron.timezone`                  | `GMT`       | Timezone in which the pg_cron background worker should run.                              |
 | `cron.use_background_workers`    | `off`       | Use background workers instead of client connections.                                    |
+| `cron.task_start_timeout`        | `10000`     | Milliseconds task is allowed to wait before error                                        |
 
 ### Changing settings
 
