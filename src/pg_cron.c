@@ -369,9 +369,9 @@ _PG_init(void)
                &CronTaskStartTimeout,
                10000,
                0,
-               20000,
+               INT_MAX,
                PGC_POSTMASTER,
-               GUC_SUPERUSER_ONLY,
+               GUC_SUPERUSER_ONLY | GUC_UNIT_MS,
                NULL, NULL, NULL);
 
 	/* set up common data for all our workers */

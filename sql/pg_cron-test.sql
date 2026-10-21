@@ -181,10 +181,10 @@ SELECT jobid, jobname, schedule, command FROM cron.job ORDER BY jobid;
 SELECT cron.schedule('bad-last-dom-job1', '0 11 $foo * *', 'VACUUM FULL');
 
 -- tests task_start_timeout bounds and default
-alter system set cron.task_start_timeout = 20000;
+alter system set cron.task_start_timeout = 2147483647;
 alter system set cron.task_start_timeout = 0;
 alter system set cron.task_start_timeout = -1;
-alter system set cron.task_start_timeout = 20001;
+alter system set cron.task_start_timeout = 2147483648;
 alter system reset cron.task_start_timeout;
 show cron.task_start_timeout;
 
