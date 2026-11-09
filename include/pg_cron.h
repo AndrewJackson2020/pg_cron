@@ -14,6 +14,7 @@
 
 /* global settings */
 extern char *CronTableDatabaseName;
+extern char *CronUserName;
 extern bool LaunchActiveJobs;
 
 #endif

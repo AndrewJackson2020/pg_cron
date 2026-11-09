@@ -175,6 +175,7 @@ static void CleanupCronTask(CronTask *task);
 
 /* global settings */
 char *CronTableDatabaseName = "postgres";
+char *CronUserName = NULL; 
 static bool CronLogStatement = true;
 static bool CronLogRun = true;
 static bool CronDomDowAndLogic = false;
@@ -242,6 +243,16 @@ _PG_init(void)
 		NULL,
 		&CronTableDatabaseName,
 		"postgres",
+		PGC_POSTMASTER,
+		GUC_SUPERUSER_ONLY,
+		NULL, NULL, NULL);
+
+	DefineCustomStringVariable(
+		"cron.username",
+		gettext_noop("Username to connect as."),
+		NULL,
+		&CronUserName,
+		NULL,
 		PGC_POSTMASTER,
 		GUC_SUPERUSER_ONLY,
 		NULL, NULL, NULL);
@@ -596,9 +607,9 @@ PgCronLauncherMain(Datum arg)
 
 	/* Connect to our database */
 #if (PG_VERSION_NUM < 110000)
-	BackgroundWorkerInitializeConnection(CronTableDatabaseName, NULL);
+	BackgroundWorkerInitializeConnection(CronTableDatabaseName, CronUserName);
 #else
-	BackgroundWorkerInitializeConnection(CronTableDatabaseName, NULL, 0);
+	BackgroundWorkerInitializeConnection(CronTableDatabaseName, CronUserName, 0);
 #endif
 
 	/* Make pg_cron recognisable in pg_stat_activity */
